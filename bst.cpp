@@ -100,7 +100,7 @@ Data BST<Data, Key>::get(const Key &k)
             current = current->right;
         }
     }
-    return nullptr;
+    return -1;
 }
 
 // Function to remove a node with a specific key from the BST
@@ -112,7 +112,7 @@ void BST<D, K>::remove(const K &key)
 
 // Helper function for removing a node with a specific key because its easier this way
 template <typename D, typename K>
-Node<D, K> BST<D, K>::removeHelper(Node<D, K> *node, const K &key)
+Node<D, K> *BST<D, K>::removeHelper(Node<D, K> *node, const K &key)
 {
     // temporary fix --
     if (node == root)
@@ -185,7 +185,7 @@ D BST<D, K>::max_data()
     }
     else
     {
-        return nullptr;
+        return -1;
     }
 }
 
@@ -209,7 +209,7 @@ K BST<D, K>::max_key()
     }
     else
     {
-        return nullptr;
+        return -1;
     }
 }
 
@@ -233,7 +233,7 @@ D BST<D, K>::min_data()
     }
     else
     {
-        return;
+        return -1;
     }
 }
 
@@ -257,7 +257,7 @@ K BST<D, K>::min_key()
     }
     else
     {
-        return nullptr;
+        return -1;
     }
 }
 
@@ -282,7 +282,7 @@ K BST<D, K>::successor(const K &key)
             successor = current->parent;
         }
     }
-    return nullptr;
+    return -1;
 }
 
 // Function to trim the BST to a specific range of keys
@@ -295,7 +295,7 @@ void BST<D, K>::trim(const K &low, const K &high)
 
 // Helper function for trimming the BST because trim was abstracted by me :)
 template <typename D, typename K>
-Node<D, K> BST<D, K>::trimHelper(Node<D, K> *node, const K &low, const K &high)
+Node<D, K> *BST<D, K>::trimHelper(Node<D, K> *node, const K &low, const K &high)
 {
     if (node == nullptr)
     {
@@ -351,10 +351,12 @@ string BST<D, K>::inOrderHelper(Node<D, K> *node)
     return result;
 }
 
-// ADD TO_STRING FN.]
-
-int main()
+// fix this FUNCTION KOTAA
+// Function to convert data for a specific key to a string
+template <typename D, typename K>
+std::string BST<D, K>::to_string()
 {
-
-    return 0;
+    K *key = key;
+    D data = get(key);
+    return std::to_string(data);
 }

@@ -41,7 +41,6 @@ public:
     Data min_data();
 
     Key min_key();
-
     Key successor(const Key &k);
 
     std::string in_order();
@@ -50,9 +49,11 @@ public:
 
     std::string inOrderHelper(Node<Data, Key> *node);
 
-    Node<Data, Key> trimHelper(Node<Data, Key> *node, const Key &low, const Key &high);
+    std::string to_string();
 
-    Node<Data, Key> removeHelper(Node<Data, Key> *node, const Key &key);
+    Node<Data, Key> *trimHelper(Node<Data, Key> *node, const Key &low, const Key &high);
+
+    Node<Data, Key> *removeHelper(Node<Data, Key> *node, const Key &key);
 };
 
 #endif // NODE_H
