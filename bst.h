@@ -1,83 +1,58 @@
-
-
-
-using namespace std;
-
 #ifndef NODE_H
 #define NODE_H
 
 template <typename Data, typename Key>
-class Node {
+class Node
+{
 
-    private:
-        Data data;
-        Key key;
-        
-        Node*left;
-        Node*right;
-        Node*parent;
-
-        //Node(const Data &d, const Key &k, Node*p): data(d), key(k), right(nullptr), left(nullptr), parent(p){}
-
-
+public:
+    Data data;
+    Key key;
+    Node *left;
+    Node *right;
+    Node *parent;
+    Node(const Data &d, const Key &k, Node *p = nullptr);
 };
 
 template <typename Data, typename Key>
 
-class BST{
+class BST
+{
 
-    private:
+private:
+    Node<Data, Key> *root;
 
-        Node<Data, Key>*root;
+public:
+    BST();
+    ~BST();
 
- 
-    public:
+    bool empty() const;
 
-        BST();
-        ~BST();
+    void insert(const Data &d, const Key &k);
 
-        bool empty() const;
+    Data get(const Key &k);
 
-        void insert(const Data &d, const Key &k);
+    void remove(const Key &k);
 
-        Data get(const Key &k);
+    Data max_data();
 
-        void remove(const Key &k);
+    Key max_key();
 
-        Node<data, key>* max_data();
+    Data min_data();
 
-        Node<data, key>* max_key();
+    Key min_key();
 
-        Node<data, key>* min_data();
+    Key successor(const Key &k);
 
-        Node<data, key>* min_key();
+    std::string in_order();
 
-        Node<data, key>* successor(const Key &k);
+    void trim(const Key &low, const Key &high);
 
-        string in_order();
+    std::string inOrderHelper(Node<Data, Key> *node);
 
-        void trim(const Key&low, const Key& high);
+    Node<Data, Key> trimHelper(Node<Data, Key> *node, const Key &low, const Key &high);
 
-
-
-
-
-
+    Node<Data, Key> removeHelper(Node<Data, Key> *node, const Key &key);
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #endif // NODE_H

@@ -1,24 +1,12 @@
 #include <iostream>
 #include "bst.h"
-
+#include <string>
 using namespace std;
 
 template <typename Data, typename Key>
+Node<Data, Key>::Node(const Data &d, const Key &k, Node *p)
+    : data(d), key(k), left(nullptr), right(nullptr), parent(p) {}
 
-class Node
-{
-
-private:
-    Data data;
-    Key key;
-    Node *left = nullptr;
-    Node *right = nullptr;
-    Node *parent;
-
-public:
-    Node(const Data &d, const Key &k, Node *p = nullptr)
-        : data(d), key(k), left(nullptr), right(nullptr), parent(p) {}
-};
 template <typename Data, typename Key>
 BST<Data, Key>::BST() : root(nullptr) {}
 
@@ -50,7 +38,7 @@ template <typename Data, typename Key>
 void BST<Data, Key>::insert(const Data &d, const Key &k)
 {
 
-    Node<Data, Key> *newNode = new Node<Data Key>(d, k);
+    Node<Data, Key> *newNode = new Node<Data, Key>(d, k);
 
     if (root == nullptr)
     { //if BST is empty
@@ -58,7 +46,7 @@ void BST<Data, Key>::insert(const Data &d, const Key &k)
         root = newNode;
     }
     Node<Data, Key> *current = root; //start from root
-    Node<Data, key> *parentt = nullptr;
+    Node<Data, Key> *parentt = nullptr;
 
     while (current != nullptr)
     {
@@ -68,7 +56,7 @@ void BST<Data, Key>::insert(const Data &d, const Key &k)
         {
             current = current->left;
         }
-        else if
+        else if (k > current->key)
         {
             current = current->right;
         }
@@ -80,13 +68,13 @@ void BST<Data, Key>::insert(const Data &d, const Key &k)
         }
     }
     newNode->parent = parentt;
-    if (k < parent->key)
+    if (k < parentt->key)
     {
-        parent->left = newNode;
+        parentt->left = newNode;
     }
     else
     {
-        parent->right = newNode;
+        parentt->right = newNode;
     }
 }
 
@@ -112,20 +100,69 @@ Data BST<Data, Key>::get(const Key &k)
             current = current->right;
         }
     }
-    // key not found
-    throw runtime_error("Key not Found");
+    return nullptr;
 }
-template <typename Data, typename Key>
-void BST<Data, Key>::remove(const Key &k)
-{
 
-    if (root == nullptr)
+// Function to remove a node with a specific key from the BST
+template <typename D, typename K>
+void BST<D, K>::remove(const K &key)
+{
+    root = removeHelper(root, key);
+}
+
+// Helper function for removing a node with a specific key because its easier this way
+template <typename D, typename K>
+Node<D, K> BST<D, K>::removeHelper(Node<D, K> *node, const K &key)
+{
+    // temporary fix --
+    if (node == root)
     {
-        cout << "Nothing to remove in the BST! \n";
-        return;
+        root = removeHelper(root, key);
+    }
+    else
+    {
+        node = removeHelper(node, key);
+    }
+    //
+
+    if (node == nullptr)
+    {
+        return node;
     }
 
-    root = removeNode(root, k);
+    if (key < node->key)
+    {
+        node->left = removeHelper(node->left, key);
+    }
+    else if (key > node->key)
+    {
+        node->right = removeHelper(node->right, key);
+    }
+    else
+    {
+        // Node with the key is found, perform removal
+
+        // Case 1: Node has only a single child or no child
+        if (node->left == nullptr)
+        {
+            Node<D, K> *temp = node->right;
+            delete node;
+            return temp;
+        }
+        else if (node->right == nullptr)
+        {
+            Node<D, K> *temp = node->left;
+            delete node;
+            return temp;
+        }
+
+        // Case 2: Node has two children
+        Node<D, K> *successor = findMin(node->right); // Find the in-order successor
+        node->key = successor->key;
+        node->data = successor->data;
+        node->right = removeHelper(node->right, successor->key);
+    }
+    return node;
 }
 
 // Function to find the maximum data in the BST
@@ -133,7 +170,7 @@ template <typename D, typename K>
 D BST<D, K>::max_data()
 {
     // Start at the root
-    TreeNode *current = root;
+    Node<D, K> *current = root;
 
     // Traverse to the rightmost node
     while (current && current->right)
@@ -157,7 +194,7 @@ template <typename D, typename K>
 K BST<D, K>::max_key()
 {
     // Start at the root
-    TreeNode *current = root;
+    Node<D, K> *current = root;
 
     // Traverse to the rightmost node
     while (current && current->right)
@@ -181,7 +218,7 @@ template <typename D, typename K>
 D BST<D, K>::min_data()
 {
     // Start at the root
-    TreeNode *current = root;
+    Node<D, K> *current = root;
 
     // Traverse to the leftmost node
     while (current && current->left)
@@ -196,7 +233,7 @@ D BST<D, K>::min_data()
     }
     else
     {
-        return nullptr;
+        return;
     }
 }
 
@@ -205,7 +242,7 @@ template <typename D, typename K>
 K BST<D, K>::min_key()
 {
     // Start at the root
-    TreeNode *current = root;
+    Node<D, K> *current = root;
 
     // Traverse to the leftmost node
     while (current && current->left)
@@ -226,17 +263,17 @@ K BST<D, K>::min_key()
 
 // Function to find the successor key in the tree
 template <typename D, typename K>
-K BST<D, K>::successor(K key)
+K BST<D, K>::successor(const K &key)
 {
     // Start at the root
-    TreeNode *current = root;
-    TreeNode *successor = nullptr;
+    Node<D, K> *current = root;
+    Node<D, K> *successor = nullptr;
 
     if (current)
     {
         if (current->right)
         {
-            return min_key()
+            return min_key();
         }
         successor = current->parent;
         while (successor && current == successor->right)
@@ -250,15 +287,15 @@ K BST<D, K>::successor(K key)
 
 // Function to trim the BST to a specific range of keys
 template <typename D, typename K>
-void BST<D, K>::trim(K low, K high)
+void BST<D, K>::trim(const K &low, const K &high)
 {
-    TreeNode *current = root;
+    Node<D, K> *current = root;
     root = trimHelper(current, low, high);
 }
 
 // Helper function for trimming the BST because trim was abstracted by me :)
 template <typename D, typename K>
-typename BST<D, K>::TreeNode *BST<D, K>::trimHelper(TreeNode *node, K low, K high)
+Node<D, K> BST<D, K>::trimHelper(Node<D, K> *node, const K &low, const K &high)
 {
     if (node == nullptr)
     {
@@ -282,4 +319,42 @@ typename BST<D, K>::TreeNode *BST<D, K>::trimHelper(TreeNode *node, K low, K hig
         node->right = trimHelper(node->right, low, high);
         return node;
     }
+}
+
+// Function to return an in-order string of keys
+template <typename D, typename K>
+string BST<D, K>::in_order()
+{
+    return inOrderHelper(root);
+}
+
+// Helper function to generate an in-order string of keys
+template <typename D, typename K>
+string BST<D, K>::inOrderHelper(Node<D, K> *node)
+{
+    if (node == nullptr)
+    {
+        return "";
+    }
+
+    string result;
+
+    // Traverse the left subtree (in-order)
+    result += inOrderHelper(node->left);
+
+    // Visit the current node
+    result += to_string(node->key) + " ";
+
+    // Traverse the right subtree (in-order)
+    result += inOrderHelper(node->right);
+
+    return result;
+}
+
+// ADD TO_STRING FN.]
+
+int main()
+{
+
+    return 0;
 }
