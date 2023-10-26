@@ -21,7 +21,7 @@ BST<string, string>* create_bst(const string& fname) {
     return bst;
 }
 
-// Function to convert a binary string to hexadecimal using the BST
+
 string convert(BST<string, string>* bst, string bin) {
     // Pad the binary string to make its length a multiple of 4
     int pad = 4 - (bin.length() % 4);
