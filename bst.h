@@ -31,6 +31,8 @@ public:
     void insert(const Data &d, const Key &k);
 
     Data get(const Key &k);
+    
+    Node<Data, Key>* findMin(Node<Data, Key>*node);
 
     void remove(const Key &k);
 
@@ -41,7 +43,8 @@ public:
     Data min_data();
 
     Key min_key();
-    Key successor(const Key &k);
+    //Key successor(const Key &key);
+    Key successor(const Key &key);
 
     std::string in_order();
 

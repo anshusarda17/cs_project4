@@ -22,15 +22,21 @@ bool BST<Data, Key>::empty() const
 
     if (root == nullptr)
     {
+        /*
         cout << "the bst is empty "
              << " \n";
         return true;
+        */
+       return true;
     }
     else
     {
+        /*
         cout << "the bst is NOT empty "
              << " \n";
         return false;
+        */
+       return false;
     }
 }
 template <typename Data, typename Key>
@@ -103,6 +109,24 @@ Data BST<Data, Key>::get(const Key &k)
     return -1;
 }
 
+// writing findMin()
+
+template <typename Data, typename Key>
+Node<Data, Key>* BST<Data, Key>::findMin(Node<Data, Key>*node){
+
+    if(node == nullptr){
+        return nullptr;
+    }
+    while (node->left != nullptr){
+        node = node->left;
+
+    }
+    return node;
+
+}
+
+//
+
 // Function to remove a node with a specific key from the BST
 template <typename D, typename K>
 void BST<D, K>::remove(const K &key)
@@ -114,6 +138,7 @@ void BST<D, K>::remove(const K &key)
 template <typename D, typename K>
 Node<D, K> *BST<D, K>::removeHelper(Node<D, K> *node, const K &key)
 {
+    /*
     // temporary fix --
     if (node == root)
     {
@@ -124,10 +149,11 @@ Node<D, K> *BST<D, K>::removeHelper(Node<D, K> *node, const K &key)
         node = removeHelper(node, key);
     }
     //
+    */
 
     if (node == nullptr)
     {
-        return node;
+        return nullptr;
     }
 
     if (key < node->key)
@@ -209,7 +235,7 @@ K BST<D, K>::max_key()
     }
     else
     {
-        return -1;
+        return 0;
     }
 }
 
@@ -269,20 +295,35 @@ K BST<D, K>::successor(const K &key)
     Node<D, K> *current = root;
     Node<D, K> *successor = nullptr;
 
-    if (current)
-    {
-        if (current->right)
-        {
-            return min_key();
+    while (current){
+        if (key <current->key){
+            successor = current;
+            current = current->left;
         }
-        successor = current->parent;
-        while (successor && current == successor->right)
-        {
-            current = successor;
-            successor = current->parent;
+        else if(key>current->key){
+            current = current->right;
+        }
+
+        else{
+            if(current->right){
+                Node<D, K>*minNode = findMin(current->right);
+                return minNode->key;
+            }
+            else{
+                break; //key found but no right tree
+            }
         }
     }
-    return -1;
+
+    if(successor){
+        return successor->key;
+
+    }
+    else{
+        return 0;
+    }
+
+
 }
 
 // Function to trim the BST to a specific range of keys
@@ -356,7 +397,5 @@ string BST<D, K>::inOrderHelper(Node<D, K> *node)
 template <typename D, typename K>
 std::string BST<D, K>::to_string()
 {
-    K *key = key;
-    D data = get(key);
-    return std::to_string(data);
+    return inOrderHelper(root);
 }
