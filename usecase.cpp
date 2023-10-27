@@ -5,6 +5,16 @@
 #include "bst.cpp"
 using namespace std;
 
+
+//=====================================================
+// Purpose: Create a BST from a CSV file with hex-bin pairs
+// Parameters: 
+//    - const string &fname: Path to the CSV file
+// Returns: Pointer to the newly created BST
+// Pre-conditions: The file specified by fname exists and is well-formatted
+// Post-conditions: A BST is created and returned, containing all hex-bin pairs from the file
+//=====================================================
+
 template <typename D, typename K>
 BST<D, K> *create_bst(const string &fname)
 {
@@ -23,6 +33,17 @@ BST<D, K> *create_bst(const string &fname)
 
     return bst;
 }
+
+//=====================================================
+// Purpose: Convert binary string to hexadecimal using BST
+// Parameters:
+//    - BST<D, K> *bst: Pointer to the BST with binary-hexadecimal pairs
+//    - string bin: Binary string for conversion
+// Returns: Hexadecimal string representing the conversion of the binary input
+// Pre-conditions: The BST pointed by bst is constructed with binary-hexadecimal pairs
+// Post-conditions: Binary string is converted to hexadecimal using BST mappings
+//=====================================================
+
 template <typename D, typename K>
 string convert(BST<D, K> *bst, string bin)
 {
