@@ -27,7 +27,7 @@ bool BST<Data, Key>::empty() const
              << " \n";
         return true;
         */
-       return true;
+        return true;
     }
     else
     {
@@ -36,7 +36,7 @@ bool BST<Data, Key>::empty() const
              << " \n";
         return false;
         */
-       return false;
+        return false;
     }
 }
 template <typename Data, typename Key>
@@ -106,23 +106,24 @@ Data BST<Data, Key>::get(const Key &k)
             current = current->right;
         }
     }
-    return -1;
+    return "";
 }
 
 // writing findMin()
 
 template <typename Data, typename Key>
-Node<Data, Key>* BST<Data, Key>::findMin(Node<Data, Key>*node){
+Node<Data, Key> *BST<Data, Key>::findMin(Node<Data, Key> *node)
+{
 
-    if(node == nullptr){
+    if (node == nullptr)
+    {
         return nullptr;
     }
-    while (node->left != nullptr){
+    while (node->left != nullptr)
+    {
         node = node->left;
-
     }
     return node;
-
 }
 
 //
@@ -211,7 +212,7 @@ D BST<D, K>::max_data()
     }
     else
     {
-        return -1;
+        return "";
     }
 }
 
@@ -259,7 +260,7 @@ D BST<D, K>::min_data()
     }
     else
     {
-        return -1;
+        return "";
     }
 }
 
@@ -295,35 +296,40 @@ K BST<D, K>::successor(const K &key)
     Node<D, K> *current = root;
     Node<D, K> *successor = nullptr;
 
-    while (current){
-        if (key <current->key){
+    while (current)
+    {
+        if (key < current->key)
+        {
             successor = current;
             current = current->left;
         }
-        else if(key>current->key){
+        else if (key > current->key)
+        {
             current = current->right;
         }
 
-        else{
-            if(current->right){
-                Node<D, K>*minNode = findMin(current->right);
+        else
+        {
+            if (current->right)
+            {
+                Node<D, K> *minNode = findMin(current->right);
                 return minNode->key;
             }
-            else{
+            else
+            {
                 break; //key found but no right tree
             }
         }
     }
 
-    if(successor){
+    if (successor)
+    {
         return successor->key;
-
     }
-    else{
+    else
+    {
         return 0;
     }
-
-
 }
 
 // Function to trim the BST to a specific range of keys
