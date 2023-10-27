@@ -34,4 +34,4 @@ usecase.o: usecase.cpp bst.h
 	g++ -std=c++11 -c $<
 
 clean:
-	del *.o test usecase
+	rm -f *.o test usecase
