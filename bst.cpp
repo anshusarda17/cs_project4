@@ -158,7 +158,7 @@ Data BST<Data, Key>::get(const Key &k)
 // Parameters:
 //    Node<Data, Key>* node - the node from where to start the search.
 // Purpose: To find the node with the minimum key value in the subtree rooted at the given node.
-// Pre-conditions: 
+// Pre-conditions:
 //    - The node provided as an argument should be part of a valid BST.
 //    - The function assumes that the BST follows the standard BST property where
 //      each node's left child key is less than the node's key and the right child key is greater.
@@ -206,10 +206,10 @@ void BST<D, K>::remove(const K &key)
 // Parameters:
 //    - Node<D, K>* node: Pointer to the current node being checked.
 //    - const K &key: The key of the node to be removed.
-// Purpose: 
+// Purpose:
 //    - To recursively find and remove a node with the given key in the BST.
 //    - Handles different cases of node removal, including leaf nodes and nodes with one or two children.
-// Returns: 
+// Returns:
 //    - Node<D, K>*: Pointer to the node that replaces the removed node (can be nullptr).
 // Description:
 //====================================
@@ -273,7 +273,7 @@ Node<D, K> *BST<D, K>::removeHelper(Node<D, K> *node, const K &key)
 // max_data() : Finds the data associated with the maximum key in the BST.
 // Parameters: None
 // Purpose: To retrieve the data associated with the node that has the highest key value in the BST.
-// Pre-conditions: 
+// Pre-conditions:
 //    - The BST is properly initialized.
 //    - The BST may be empty or contain one or more nodes.
 // Post-conditions:
@@ -309,7 +309,7 @@ D BST<D, K>::max_data()
 // max_key() : Retrieves the maximum key value in the BST.
 // Parameters: None
 // Purpose: To find and return the highest key value present in the BST.
-// Pre-conditions: 
+// Pre-conditions:
 //    - The BST is properly initialized.
 //    - The BST may be empty or contain one or more nodes.
 // Post-conditions:
@@ -471,7 +471,7 @@ K BST<D, K>::successor(const K &key)
 
 //====================================
 // trim(low, high) : Trims the BST to contain only keys within the [low, high] interval.
-// Parameters: 
+// Parameters:
 //    - K low - The lower bound of the interval.
 //    - K high - The upper bound of the interval.
 // Purpose: To modify the BST such that it only contains nodes whose keys are within the given interval.
@@ -496,10 +496,10 @@ void BST<D, K>::trim(const K &low, const K &high)
 //    - Node<D, K>* node: Pointer to the current node being examined.
 //    - const K &low: The lower bound of the interval.
 //    - const K &high: The upper bound of the interval.
-// Purpose: 
+// Purpose:
 //    - To recursively trim the BST so that it only retains nodes with keys within the [low, high] interval.
 //    - This function is designed to assist the public trim method.
-// Returns: 
+// Returns:
 //    - Node<D, K>*: The pointer to the current node after trimming, or nullptr if the node is out of bounds.
 //====================================
 template <typename D, typename K>
@@ -552,10 +552,10 @@ string BST<D, K>::in_order()
 // Parameters:
 //    - Node<D, K>* node: Pointer to the current node in the BST.
 //    - bool &first: Reference to a boolean indicating if the current node is the first in the traversal.
-// Purpose: 
+// Purpose:
 //    - To perform an in-order traversal of the BST and create a string representation of the keys.
 //    - Assists in creating a string for the public in_order() method.
-// Returns: 
+// Returns:
 //    - string: In-order concatenated string of keys from the BST.
 //====================================
 template <typename D, typename K>
@@ -592,10 +592,10 @@ string BST<D, K>::inOrderHelper(Node<D, K> *node, bool &first)
 
 //====================================
 // to_string(): Function to convert the keys of all nodes in the BST to a string.
-// Purpose: 
+// Purpose:
 //    - To create a string representation of all keys in the BST.
 //    - This string is not in any specific order and is based on a breadth-first traversal.
-// Returns: 
+// Returns:
 //    - string: A string of keys separated by spaces.
 //====================================
 template <typename D, typename K>
@@ -630,4 +630,3 @@ string BST<D, K>::to_string()
     result.pop_back();
     return result;
 }
-
