@@ -1,7 +1,7 @@
-all: test.o bst.o
+all: test.o
 
-test.o: test_bst_example.cpp bst.cpp
+test.o: test_bst_example.o usecase.o
 	g++ test_bst_example.cpp bst.cpp -o test
 
-bst.o: bst.cpp bst.h
-	g++ bst.cpp -o bst
+usecase.o: bst.cpp bst.h usecase.cpp
+	g++ usecase.cpp -o bst
