@@ -1,232 +1,499 @@
 //
-//  test_bst_detailed.cpp
-//  CS 271 BST Project: Detailed Test File
+//  test_bst.cpp
+//  CS 271 BST Project4: Test File
 //
-//  Created by ChatGPT Assistance
+//  Created by us on top of Dr.Truex's file
 //
 
-#include <iostream>
-#include "usecase.cpp"
 #include <stdlib.h>
+#include <iostream>
 #include <math.h>
-//#include "bst.cpp"
-//#include"main.cpp"
+#include "usecase.cpp"
+
+#include <chrono>
+#include <fstream>
+
 
 using namespace std;
 
 void test_empty()
 {
-    BST<string, int> bst;
-
-    // Newly created BST should be empty.
-    if (!bst.empty())
+    try
     {
-        cout << "Error: New BST should be empty." << endl;
+        BST<string, int> bst;
+        if (!bst.empty())
+        {
+            cout << "Incorrect empty result." << endl;
+        }
+        bst.insert("one", 1);
+        if (bst.empty())
+        {
+            cout << "Incorrect empty result." << endl;
+        }
     }
-
-    bst.insert("one", 1);
-
-    // After insertion, BST should not be empty.
-    if (bst.empty())
+    catch (exception &e)
     {
-        cout << "Error: BST should not be empty after insertion." << endl;
+        cerr << "Error in determining if BST is empty : " << e.what() << endl;
+    }
+ 
+    // testing our stuff
+       try
+    {
+        BST<string, float> bst;
+        if (!bst.empty())
+        {
+            cout << "Incorrect empty result." << endl;
+        }
+        bst.insert("one", 1.234525234234);
+        if (bst.empty())
+        {
+            cout << "Incorrect empty result." << endl;
+        }
+    }
+    catch (exception &e)
+    {
+        cerr << "Error in determining if BST is empty : " << e.what() << endl;
+    }
+    // long long 
+       try
+    {
+        BST<string, double> bst;
+        if (!bst.empty())
+        {
+            cout << "Incorrect empty result." << endl;
+        }
+        bst.insert("one", 134253445234324);
+        if (bst.empty())
+        {
+            cout << "Incorrect empty result." << endl;
+        }
+    }
+    catch (exception &e)
+    {
+        cerr << "Error in determining if BST is empty : " << e.what() << endl;
     }
 }
 
 void test_insert()
 {
-    BST<string, int> bst;
 
-    // Test inserting in non-decreasing order
-    for (int i = 1; i <= 5; i++)
+    auto begin = std::chrono::high_resolution_clock::now();
+
+
+    try
     {
-        bst.insert("data", i);
+        BST<string, int> bst;
+        bst.insert("one", 1);
+        string bst_str = bst.to_string();
+        if (bst_str != "1")
+        {
+            cout << "Incorrect first result of inserting (\"one\", 1). Expected 1 but got : " << bst_str << endl;
+        }
+        for (int i = 2; i <= 10; i++)
+        {
+            bst.insert("some data", i);
+        }
+        bst_str = bst.to_string();
+        if (bst_str != "1 2 3 4 5 6 7 8 9 10")
+        {
+            cout << "Incorrect first result of inserting keys 1-10 in order. Expected 1 2 3 4 5 6 7 8 9 10 but got : " << bst_str << endl;
+        }
+        int vals[10] = {5, 2, 7, 1, 3, 4, 6, 9, 8, 10};
+        BST<string, int> balanced_bst;
+
+        for (int i = 0; i < 10; i++)
+        {
+            balanced_bst.insert("some data", vals[i]);
+        }
+        string bst_str2 = balanced_bst.to_string();
+        if (bst_str2 != "5 2 7 1 3 6 9 4 8 10")
+        {
+            cout << "Incorrect result of inserting keys {5, 2, 7, 1, 3, 4, 6, 9, 8, 10}. Expected 5 2 7 1 3 6 9 4 8 10 but got : " << bst_str << endl;
+        }
+    }
+    catch (exception &e)
+    {
+        cerr << "Error inserting into bst : " << e.what() << endl;
     }
 
-    if (bst.to_string() != "1 2 3 4 5")
+
+    // another test
+
+
+    try
     {
-        cout << "Error: Incorrect FII in-order traversal after incremental insertion." << endl;
+        BST<string, float> bst8;
+        bst8.insert("one", 1.2);
+        string bst_str = bst8.to_string();
+        if (bst_str != "1.200000")
+        {
+            cout << "Incorrect first result of inserting (\"one\", 1). Expected 1 but got : " << bst_str << endl;
+        }
+        for (int i = 2; i <= 10; i++)
+        {
+            bst8.insert("some data", i);
+        }
+        bst_str = bst8.to_string();
+        if (bst_str != "1.200000 2.000000 3.000000 4.000000 5.000000 6.000000 7.000000 8.000000 9.000000 10.000000")
+        {
+            cout << "Incorrect first result of inserting keys 1-10 in order. Expected 1 2 3 4 5 6 7 8 9 10 but got : " << bst_str << endl;
+        }
+        int vals[10] = {5, 2, 7, 1, 3, 4, 6, 9, 8, 10};
+        BST<string, int> balanced_bst;
+
+        for (int i = 0; i < 10; i++)
+        {
+            balanced_bst.insert("some data", vals[i]);
+        }
+        string bst_str2 = balanced_bst.to_string();
+        if (bst_str2 != "5 2 7 1 3 6 9 4 8 10")
+        {
+            cout << "Incorrect result of inserting keys {5, 2, 7, 1, 3, 4, 6, 9, 8, 10}. Expected 5 2 7 1 3 6 9 4 8 10 but got : " << bst_str << endl;
+        }
+    }
+    catch (exception &e)
+    {
+        cerr << "Error inserting into bst : " << e.what() << endl;
     }
 
-    bst = BST<string, int>(); // Resetting the tree
 
-    // Test inserting in non-increasing order
-    for (int i = 5; i > 0; i--)
-    {
-        bst.insert("data", i);
-    }
-
-    if (bst.to_string() != "1 2 3 4 5")
-    {
-        cout << "Error: Incorrect TRTR in-order traversal after decremental insertion." << endl;
-    }
+    //
+    auto end = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+    cout << "insert function's time: " << elapsed.count() << " nanoseconds. \n";
 }
 
 void test_get()
 {
-    BST<string, int> bst;
-    bst.insert("one", 1);
-    bst.insert("three", 3);
-    bst.insert("two", 2);
 
-    // Testing for existing keys
-    if (bst.get(1) != "one" || bst.get(2) != "two" || bst.get(3) != "three")
+
+    try
     {
-        cout << "Error: Get function is not returning correct values." << endl;
+        BST<string, int> bst;
+        string val = bst.get(0);
+        if (val != "")
+        {
+            cout << "Incorrect get result from empty bst. Expected 0 but got " << val << endl;
+        }
+        bst.insert("one", 1);
+        val = bst.get(1);
+        if (val != "one")
+        {
+            cout << "Incorrect get result. Expected \"one\" but got : " << val << endl;
+        }
     }
-
-    // Test for non-existing key. Assuming it returns an empty string for non-existing keys.
-    if (!bst.get(4).empty())
+    catch (exception &e)
     {
-        cout << "Error: Get function should return an empty string for non-existing keys." << endl;
+        cerr << "Error in getting data from bst : " << e.what() << endl;
     }
 }
 
 void test_remove()
 {
-    BST<string, int> bst;
-    bst.insert("one", 1);
-    bst.insert("three", 3);
-    bst.insert("two", 2);
 
-    // Removing a middle node with two children
-    bst.remove(2);
+    auto begin = std::chrono::high_resolution_clock::now();
 
-    if (bst.to_string() != "1 3")
+    try
     {
-        cout << "Error: Incorrect in-order traversal after removing a middle node." << endl;
+        int vals[10] = {5, 2, 7, 1, 3, 4, 6, 9, 8, 10};
+        BST<string, int> balanced_bst;
+        for (int i = 0; i < 10; i++)
+        {
+            balanced_bst.insert("some data", vals[i]);
+        }
+        balanced_bst.remove(7);
+        string bst_str = balanced_bst.to_string();
+        if (bst_str != "5 2 8 1 3 6 9 4 10")
+        {
+            cout << "Incorrect result of removing 7. Expected 5 2 8 1 3 6 9 4 10 but got : " << bst_str << endl;
+        }
+    }
+    catch (exception &e)
+    {
+        cerr << "Error in removing node from bst : " << e.what() << endl;
     }
 
-    // Test removing a non-existent node
-    bst.remove(5); // Assuming no error is thrown
-
-    // Test removing the root node
-    bst.remove(1);
-
-    if (bst.to_string() != "3")
-    {
-        cout << "Error: Incorrect in-order traversal after removing the root." << endl;
-    }
+    auto end = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+    cout << "remove function's time: " << elapsed.count() << " nanoseconds. \n";
 }
 
-void test_min_max()
+void test_max_data()
 {
-    BST<string, int> bst;
-
-    bst.insert("five", 5);
-    bst.insert("two", 2);
-    bst.insert("eight", 8);
-
-    // Testing minimum and maximum data and key
-    if (bst.min_data() != "two" || bst.max_data() != "eight" ||
-        bst.min_key() != 2 || bst.max_key() != 8)
+    auto begin = std::chrono::high_resolution_clock::now();
+    try
     {
-        cout << "Error: Min or Max functions are not working correctly." << endl;
+        int vals[10] = {5, 2, 7, 1, 3, 4, 6, 9, 8, 10};
+        BST<string, int> balanced_bst;
+        for (int i = 0; i < 10; i++)
+        {
+            balanced_bst.insert(to_string(vals[i]) + " data", vals[i]);
+        }
+        string max_str = balanced_bst.max_data();
+        if (max_str != "10 data")
+        {
+            cout << "Incorrect result of max_data. Expected \"10 data\" but got : " << max_str << endl;
+        }
+    }
+    catch (exception &e)
+    {
+        cerr << "Error in determining data of max node in bst : " << e.what() << endl;
     }
 
-    // Testing min and max on an empty tree
-    BST<string, int> emptyTree;
-    // Assuming they return an empty string and -1 for the key on an empty tree.
-    if (!emptyTree.min_data().empty() || !emptyTree.max_data().empty() ||
-        emptyTree.min_key() != -1 || emptyTree.max_key() != -1)
+    auto end = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+    cout << "max_data function's time: " << elapsed.count() << " nanoseconds. \n";
+}
+
+void test_max_key()
+{
+
+    auto begin = std::chrono::high_resolution_clock::now();
+    try
     {
-        cout << "Error: Min or Max functions should handle empty trees." << endl;
+        int vals[10] = {5, 2, 7, 1, 3, 4, 6, 9, 8, 10};
+        BST<string, int> balanced_bst;
+        for (int i = 0; i < 10; i++)
+        {
+            balanced_bst.insert(to_string(vals[i]) + " data", vals[i]);
+        }
+        int max_k = balanced_bst.max_key();
+        if (max_k != 10)
+        {
+            cout << "Incorrect result of max_key. Expected 10 but got : " << max_k << endl;
+        }
     }
+    catch (exception &e)
+    {
+        cerr << "Error in determining key of max node in bst : " << e.what() << endl;
+    }
+
+    auto end = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+    cout << "max_key function's time: " << elapsed.count() << " nanoseconds. \n";
+}
+
+void test_min_data()
+{
+    auto begin = std::chrono::high_resolution_clock::now();
+
+    try
+    {
+        int vals[10] = {5, 2, 7, 1, 3, 4, 6, 9, 8, 10};
+        BST<string, int> balanced_bst;
+        for (int i = 0; i < 10; i++)
+        {
+            balanced_bst.insert(to_string(vals[i]) + " data", vals[i]);
+        }
+        string min_str = balanced_bst.min_data();
+        if (min_str != "1 data")
+        {
+            cout << "Incorrect result of min_data. Expected \"1 data\" but got : " << min_str << endl;
+        }
+    }
+    catch (exception &e)
+    {
+        cerr << "Error in determining data of min node in bst : " << e.what() << endl;
+    }
+    auto end = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+    cout << "min_data function's time: " << elapsed.count() << " nanoseconds. \n";
+}
+
+void test_min_key()
+{
+
+    auto begin = std::chrono::high_resolution_clock::now();
+    try
+    {
+        int vals[10] = {5, 2, 7, 1, 3, 4, 6, 9, 8, 10};
+        BST<string, int> balanced_bst;
+        for (int i = 0; i < 10; i++)
+        {
+            balanced_bst.insert(to_string(vals[i]) + " data", vals[i]);
+        }
+        int min_k = balanced_bst.min_key();
+        if (min_k != 1)
+        {
+            cout << "Incorrect result of min_key. Expected 10 but got : " << min_k << endl;
+        }
+    }
+    catch (exception &e)
+    {
+        cerr << "Error in determining key of min node in bst : " << e.what() << endl;
+    }
+    auto end = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+    cout << "min_key function's time: " << elapsed.count() << " nanoseconds. \n";
 }
 
 void test_successor()
 {
-    BST<string, int> bst;
 
-    for (int i = 1; i <= 10; i++)
+    auto begin = std::chrono::high_resolution_clock::now();
+    try
     {
-        bst.insert("data", i);
+        int vals[10] = {5, 2, 7, 1, 3, 4, 6, 9, 8, 10};
+        BST<string, int> balanced_bst;
+        for (int i = 0; i < 10; i++)
+        {
+            balanced_bst.insert(to_string(vals[i]) + " data", vals[i]);
+        }
+        int succ = balanced_bst.successor(4);
+        if (succ != 5)
+        {
+            cout << "Incorrect result of successor of 4. Expected 5 but got : " << succ << endl;
+        }
+        succ = balanced_bst.successor(7);
+        if (succ != 8)
+        {
+            cout << "Incorrect result of successor of 7. Expected 8 but got : " << succ << endl;
+        }
+        succ = balanced_bst.successor(10);
+        if (succ != 0)
+        {
+            cout << "Incorrect result of successor of 10. Expected 0 but got : " << succ << endl;
+        }
     }
-
-    // Common case
-    if (bst.successor(5) != 6)
+    catch (exception &e)
     {
-        cout << "Error: Successor function is not working correctly." << endl;
+        cerr << "Error in determining successor in bst : " << e.what() << endl;
     }
 
-    // Edge case: No successor
-    if (bst.successor(10) != 0)
-    { // Assuming 0 indicates no successor
-        cout << "Error: Successor function is not working correctly for edge case." << endl;
-    }
-
-    // Edge case: Non-existing node
-    if (bst.successor(20) != 0)
-    { // Assuming 0 indicates no successor for non-existing node
-        cout << "Error: Successor function should return 0 for non-existing nodes." << endl;
-    }
+    auto end = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+    cout << "successor function's time: " << elapsed.count() << " nanoseconds. \n";
 }
 
 void test_in_order()
 {
-    BST<string, int> bst;
-
-    for (int i = 5; i > 0; i--)
+    auto begin = std::chrono::high_resolution_clock::now();
+    try
     {
-        bst.insert("data", i);
+        BST<string, int> bst;
+        for (int i = 1; i <= 10; i++)
+        {
+            bst.insert("some data", i);
+        }
+        string bst_str = bst.in_order();
+        if (bst_str != "1 2 3 4 5 6 7 8 9 10")
+        {
+            cout << "Incorrect first in_order result after inserting keys 1-10 in order. Expected 1 2 3 4 5 6 7 8 9 10 but got : " << bst_str << endl;
+        }
+        int vals[10] = {5, 2, 7, 1, 3, 4, 6, 9, 8, 10};
+        BST<string, int> balanced_bst;
+        for (int i = 0; i < 10; i++)
+        {
+            balanced_bst.insert("some data", vals[i]);
+        }
+        bst_str = balanced_bst.in_order();
+        if (bst_str != "1 2 3 4 5 6 7 8 9 10")
+        {
+            cout << "Incorrect in_order result after inserting keys {5, 2, 7, 1, 3, 4, 6, 9, 8, 10}. Expected 1 2 3 4 5 6 7 8 9 10 but got : " << bst_str << endl;
+        }
     }
-
-    if (bst.in_order() != "1 2 3 4 5")
+    catch (exception &e)
     {
-        cout << "Error: In-order traversal is not working correctly." << endl;
+        cerr << "Error getting keys in_order from bst : " << e.what() << endl;
     }
+    auto end = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+    cout << "insert function's time: " << elapsed.count() << " nanoseconds. \n";
 }
-/*
-void test_binhex()
-{
-    BST<string, int> bst;
-    bst.insert("a", 0b1010);
-    bst.insert("f", 0b1111);
-
-    if (bst.binhex() != "a f")
-    {
-        cout << "Error: binhex function is not working correctly." << endl;
-    }
-}
-*/
 
 void test_trim()
 {
-    BST<string, int> bst;
-
-    for (int i = 1; i <= 10; i++)
+    try
     {
-        bst.insert("data", i);
+        BST<string, int> bst;
+        int vals[3] = {1, 0, 2};
+        for (int i = 0; i < 3; i++)
+        {
+            bst.insert(to_string(vals[i]) + " data", vals[i]);
+        }
+        bst.trim(1, 2);
+        string bst_str = bst.to_string();
+        if (bst_str != "1 2")
+        {
+            cout << "Incorrect tree after trimming 1 0 2 with low=1, high=2. Expected 1 2 but got : " << bst_str << endl;
+        }
+        BST<string, int> bst2;
+        int vals2[5] = {3, 0, 4, 2, 1};
+        for (int i = 0; i < 5; i++)
+        {
+            bst2.insert(to_string(vals2[i]) + " data", vals2[i]);
+        }
+        bst2.trim(1, 3);
+        bst_str = bst2.to_string();
+        if (bst_str != "3 2 1")
+        {
+            cout << "Incorrect tree after trimming 3 0 4 2 1 with low=1, high=3. Expected 3 2 1 but got : " << bst_str << endl;
+        }
+    }
+    catch (exception &e)
+    {
+        cerr << "Error in trimming the bst : " << e.what() << endl;
+    }
+}
+
+void test_binhex()
+{
+    try
+    {
+        BST<string, string> *bst1 = create_bst<string, string>("binhex.txt");
+        string bin1 = "111010100101";
+        string expected_hex1 = "EA5";
+
+        string hex1 = convert<string, string>(bst1, bin1);
+        delete bst1;
+
+        if (hex1 != expected_hex1)
+        {
+            cout << "Incorrect first result converting " << bin1 << " to hex. Expected : " << expected_hex1 << ", but got : " << hex1 << endl;
+        }
+    }
+    catch (exception &e)
+    {
+        cerr << "Error converting binary to hex : " << e.what() << endl;
     }
 
-    bst.trim(3, 8);
-
-    if (bst.to_string() != "3 4 5 6 7 8")
+    try
     {
-        cout << "Error: Trim function is not working correctly." << endl;
+        BST<string, string> *bst2 = create_bst<string, string>("binhex.txt");
+        string bin2 = "110101";
+        string expected_hex2 = "35";
+
+        string hex2 = convert<string, string>(bst2, bin2);
+        delete bst2;
+
+        if (hex2 != expected_hex2)
+        {
+            cout << "Incorrect result converting " << bin2 << " to hex. Expected : " << expected_hex2 << ", but got : " << hex2 << endl;
+        }
     }
-
-    // Edge case: Trim with reversed boundaries
-    bst.trim(8, 3); // Assuming this doesn't change the tree
-    if (bst.to_string() != "3 4 5 6 7 8")
+    catch (exception &e)
     {
-        cout << "Error: Trim function should handle reversed boundaries correctly." << endl;
+        cerr << "Error converting binary to hex : " << e.what() << endl;
     }
 }
 
 int main()
 {
+
     test_empty();
     test_insert();
     test_get();
     test_remove();
-    test_min_max();
+    test_max_data();
+    test_max_key();
+    test_min_data();
+    test_min_key();
     test_successor();
     test_in_order();
-    //test_binhex();
     test_trim();
-
-    cout << "Detailed testing completed." << endl;
+    test_binhex();
+    cout << "NO ERRORS ABOVE? SUCCESSFUL." << endl;
+    cout << "Testing completed" << endl;
 
     return 0;
 }
