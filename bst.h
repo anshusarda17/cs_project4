@@ -31,8 +31,8 @@ public:
     void insert(const Data &d, const Key &k);
 
     Data get(const Key &k);
-    
-    Node<Data, Key>* findMin(Node<Data, Key>*node);
+
+    Node<Data, Key> *findMin(Node<Data, Key> *node);
 
     void remove(const Key &k);
 

@@ -1,12 +1,12 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include "bst.cpp"
 using namespace std;
 
-BST<string, string> *create_bst(const string &fname)
+template <typename D, typename K>
+BST<D, K> *create_bst(const string &fname)
 {
-    auto *bst = new BST<string, string>();
+    auto *bst = new BST<D, K>();
 
     ifstream file(fname);
     string line, bin, hex;
@@ -22,7 +22,8 @@ BST<string, string> *create_bst(const string &fname)
     return bst;
 }
 
-string convert(BST<string, string> *bst, string bin)
+template <typename D, typename K>
+string convert(BST<D, K> *bst, string bin)
 {
     // Pad the binary string to make its length a multiple of 4
     int pad = 4 - (bin.length() % 4);
@@ -40,10 +41,12 @@ string convert(BST<string, string> *bst, string bin)
     return hex;
 }
 
+/*
+
 int main()
 {
     string filename = "binhex.txt";
-    auto *bst = create_bst(filename);
+    auto *bst = create_bst<string, string>(filename); // Specify Data and Key types
 
     string binaryInput;
     cout << "Enter binary representation for conversion: ";
@@ -55,3 +58,5 @@ int main()
     delete bst; // Clean up the BST
     return 0;
 }
+
+*/
