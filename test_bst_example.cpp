@@ -248,8 +248,6 @@ void test_in_order()
             bst.insert("some data", i);
         }
         string bst_str = bst.in_order();
-        cout << bst_str;
-        cout << "this is checking \n";
         if (bst_str != "1 2 3 4 5 6 7 8 9 10")
         {
             cout << "Incorrect first in_order result after inserting keys 1-10 in order. Expected 1 2 3 4 5 6 7 8 9 10 but got : " << bst_str << endl;
@@ -363,7 +361,7 @@ int main()
     test_in_order();
     test_trim();
     test_binhex();
-
+    cout << "NO ERRORS ABOVE? SUCCESSFUL." << endl;
     cout << "Testing completed" << endl;
 
     return 0;
