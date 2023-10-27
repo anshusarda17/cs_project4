@@ -1,6 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <string>
+// #include "bst.cpp"
 using namespace std;
 
 template <typename D, typename K>
@@ -14,8 +16,8 @@ BST<D, K> *create_bst(const string &fname)
     while (getline(file, line))
     {
         stringstream ss(line);
-        getline(ss, bin, ',');
-        getline(ss, hex);
+        getline(ss, hex, ',');
+        getline(ss, bin);
         bst->insert(hex, bin);
     }
 
@@ -25,19 +27,23 @@ BST<D, K> *create_bst(const string &fname)
 template <typename D, typename K>
 string convert(BST<D, K> *bst, string bin)
 {
-    // Pad the binary string to make its length a multiple of 4
-    int pad = 4 - (bin.length() % 4);
-    if (pad != 4)
-    {
-        bin = string(pad, '0') + bin;
-    }
-
     string hex;
+
     for (size_t i = 0; i < bin.length(); i += 4)
     {
         string segment = bin.substr(i, 4);
-        hex += bst->get(segment);
+        string hexSegment = bst->get(segment);
+
+        // Check if the segment is found in the BST
+        if (hexSegment.empty())
+        {
+            // Handle the case where the segment is not found
+            // You could return an error value or throw an exception.
+        }
+
+        hex += hexSegment;
     }
+
     return hex;
 }
 

@@ -394,14 +394,15 @@ string BST<D, K>::inOrderHelper(Node<D, K> *node, bool &first)
 
     // Visit the current node
     // to not add a space at the end,
-    if (first){
-        first  =false;
+    if (first)
+    {
+        first = false;
     }
-    else{
+    else
+    {
         result += " ";
     }
-        
-    
+
     result += std::to_string(node->key);
 
     // Traverse the right subtree (in-order)
@@ -428,7 +429,6 @@ string BST<D, K>::to_string()
     {
         Node<D, K> *current = nodes.front();
         nodes.pop();
-        cout << std::to_string(current->key) << endl;
         result += std::to_string(current->key) + " ";
 
         if (current->left)
