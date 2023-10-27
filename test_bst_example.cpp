@@ -1,14 +1,18 @@
 //
-//  test_bst_example.cpp
-//  CS 271 BST Project: Example Test File
+//  test_bst.cpp
+//  CS 271 BST Project4: Test File
 //
-//  Created by Dr. Stacey Truex
+//  Created by us on top of Dr.Truex's file
 //
 
 #include <stdlib.h>
 #include <iostream>
 #include <math.h>
 #include "usecase.cpp"
+
+#include <chrono>
+#include <fstream>
+
 
 using namespace std;
 
@@ -31,10 +35,51 @@ void test_empty()
     {
         cerr << "Error in determining if BST is empty : " << e.what() << endl;
     }
+ 
+    // testing our stuff
+       try
+    {
+        BST<string, float> bst;
+        if (!bst.empty())
+        {
+            cout << "Incorrect empty result." << endl;
+        }
+        bst.insert("one", 1.234525234234);
+        if (bst.empty())
+        {
+            cout << "Incorrect empty result." << endl;
+        }
+    }
+    catch (exception &e)
+    {
+        cerr << "Error in determining if BST is empty : " << e.what() << endl;
+    }
+    // long long 
+       try
+    {
+        BST<string, double> bst;
+        if (!bst.empty())
+        {
+            cout << "Incorrect empty result." << endl;
+        }
+        bst.insert("one", 134253445234324);
+        if (bst.empty())
+        {
+            cout << "Incorrect empty result." << endl;
+        }
+    }
+    catch (exception &e)
+    {
+        cerr << "Error in determining if BST is empty : " << e.what() << endl;
+    }
 }
 
 void test_insert()
 {
+
+    auto begin = std::chrono::high_resolution_clock::now();
+
+
     try
     {
         BST<string, int> bst;
@@ -70,10 +115,58 @@ void test_insert()
     {
         cerr << "Error inserting into bst : " << e.what() << endl;
     }
+
+
+    // another test
+
+
+    try
+    {
+        BST<string, float> bst8;
+        bst8.insert("one", 1.2);
+        string bst_str = bst8.to_string();
+        if (bst_str != "1.200000")
+        {
+            cout << "Incorrect first result of inserting (\"one\", 1). Expected 1 but got : " << bst_str << endl;
+        }
+        for (int i = 2; i <= 10; i++)
+        {
+            bst8.insert("some data", i);
+        }
+        bst_str = bst8.to_string();
+        if (bst_str != "1.200000 2.000000 3.000000 4.000000 5.000000 6.000000 7.000000 8.000000 9.000000 10.000000")
+        {
+            cout << "Incorrect first result of inserting keys 1-10 in order. Expected 1 2 3 4 5 6 7 8 9 10 but got : " << bst_str << endl;
+        }
+        int vals[10] = {5, 2, 7, 1, 3, 4, 6, 9, 8, 10};
+        BST<string, int> balanced_bst;
+
+        for (int i = 0; i < 10; i++)
+        {
+            balanced_bst.insert("some data", vals[i]);
+        }
+        string bst_str2 = balanced_bst.to_string();
+        if (bst_str2 != "5 2 7 1 3 6 9 4 8 10")
+        {
+            cout << "Incorrect result of inserting keys {5, 2, 7, 1, 3, 4, 6, 9, 8, 10}. Expected 5 2 7 1 3 6 9 4 8 10 but got : " << bst_str << endl;
+        }
+    }
+    catch (exception &e)
+    {
+        cerr << "Error inserting into bst : " << e.what() << endl;
+    }
+
+
+    //
+    auto end = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+    cout << "insert function's time: " << elapsed.count() << " nanoseconds. \n";
 }
 
 void test_get()
 {
+
+
     try
     {
         BST<string, int> bst;
@@ -97,6 +190,9 @@ void test_get()
 
 void test_remove()
 {
+
+    auto begin = std::chrono::high_resolution_clock::now();
+
     try
     {
         int vals[10] = {5, 2, 7, 1, 3, 4, 6, 9, 8, 10};
@@ -116,10 +212,15 @@ void test_remove()
     {
         cerr << "Error in removing node from bst : " << e.what() << endl;
     }
+
+    auto end = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+    cout << "remove function's time: " << elapsed.count() << " nanoseconds. \n";
 }
 
 void test_max_data()
 {
+    auto begin = std::chrono::high_resolution_clock::now();
     try
     {
         int vals[10] = {5, 2, 7, 1, 3, 4, 6, 9, 8, 10};
@@ -138,10 +239,16 @@ void test_max_data()
     {
         cerr << "Error in determining data of max node in bst : " << e.what() << endl;
     }
+
+    auto end = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+    cout << "max_data function's time: " << elapsed.count() << " nanoseconds. \n";
 }
 
 void test_max_key()
 {
+
+    auto begin = std::chrono::high_resolution_clock::now();
     try
     {
         int vals[10] = {5, 2, 7, 1, 3, 4, 6, 9, 8, 10};
@@ -160,10 +267,16 @@ void test_max_key()
     {
         cerr << "Error in determining key of max node in bst : " << e.what() << endl;
     }
+
+    auto end = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+    cout << "max_key function's time: " << elapsed.count() << " nanoseconds. \n";
 }
 
 void test_min_data()
 {
+    auto begin = std::chrono::high_resolution_clock::now();
+
     try
     {
         int vals[10] = {5, 2, 7, 1, 3, 4, 6, 9, 8, 10};
@@ -182,10 +295,15 @@ void test_min_data()
     {
         cerr << "Error in determining data of min node in bst : " << e.what() << endl;
     }
+    auto end = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+    cout << "min_data function's time: " << elapsed.count() << " nanoseconds. \n";
 }
 
 void test_min_key()
 {
+
+    auto begin = std::chrono::high_resolution_clock::now();
     try
     {
         int vals[10] = {5, 2, 7, 1, 3, 4, 6, 9, 8, 10};
@@ -204,10 +322,15 @@ void test_min_key()
     {
         cerr << "Error in determining key of min node in bst : " << e.what() << endl;
     }
+    auto end = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+    cout << "min_key function's time: " << elapsed.count() << " nanoseconds. \n";
 }
 
 void test_successor()
 {
+
+    auto begin = std::chrono::high_resolution_clock::now();
     try
     {
         int vals[10] = {5, 2, 7, 1, 3, 4, 6, 9, 8, 10};
@@ -236,10 +359,15 @@ void test_successor()
     {
         cerr << "Error in determining successor in bst : " << e.what() << endl;
     }
+
+    auto end = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+    cout << "successor function's time: " << elapsed.count() << " nanoseconds. \n";
 }
 
 void test_in_order()
 {
+    auto begin = std::chrono::high_resolution_clock::now();
     try
     {
         BST<string, int> bst;
@@ -268,6 +396,9 @@ void test_in_order()
     {
         cerr << "Error getting keys in_order from bst : " << e.what() << endl;
     }
+    auto end = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+    cout << "insert function's time: " << elapsed.count() << " nanoseconds. \n";
 }
 
 void test_trim()
