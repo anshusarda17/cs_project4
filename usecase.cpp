@@ -8,7 +8,7 @@ using namespace std;
 template <typename D, typename K>
 BST<D, K> *create_bst(const string &fname)
 {
-    auto *bst = new BST<D, K>();
+    BST<D, K> *bst = new BST<D, K>();
 
     ifstream file(fname);
     string line, bin, hex;
@@ -28,20 +28,23 @@ template <typename D, typename K>
 string convert(BST<D, K> *bst, string bin)
 {
     string hex;
-
-    for (size_t i = 0; i < bin.length(); i += 4)
+    int i = 0;
+    // for (size_t i = 0; i < bin.length(); i += 4)
+    while (i < bin.length())
     {
         string segment = bin.substr(i, 4);
         string hexSegment = bst->get(segment);
 
+        /*
         // Check if the segment is found in the BST
         if (hexSegment.empty())
         {
-            // Handle the case where the segment is not found
-            // You could return an error value or throw an exception.
+            return;
         }
+        */
 
         hex += hexSegment;
+        i += 4;
     }
 
     return hex;
