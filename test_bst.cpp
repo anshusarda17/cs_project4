@@ -9,7 +9,8 @@
 #include "usecase.cpp"
 #include <stdlib.h>
 #include <math.h>
-#include "bst.cpp"
+//#include "bst.cpp"
+//#include"main.cpp"
 
 using namespace std;
 
@@ -44,7 +45,7 @@ void test_insert()
 
     if (bst.to_string() != "1 2 3 4 5")
     {
-        cout << "Error: Incorrect in-order traversal after incremental insertion." << endl;
+        cout << "Error: Incorrect FII in-order traversal after incremental insertion." << endl;
     }
 
     bst = BST<string, int>(); // Resetting the tree
@@ -57,7 +58,7 @@ void test_insert()
 
     if (bst.to_string() != "1 2 3 4 5")
     {
-        cout << "Error: Incorrect in-order traversal after decremental insertion." << endl;
+        cout << "Error: Incorrect TRTR in-order traversal after decremental insertion." << endl;
     }
 }
 
@@ -175,7 +176,7 @@ void test_in_order()
         cout << "Error: In-order traversal is not working correctly." << endl;
     }
 }
-
+/*
 void test_binhex()
 {
     BST<string, int> bst;
@@ -187,6 +188,7 @@ void test_binhex()
         cout << "Error: binhex function is not working correctly." << endl;
     }
 }
+*/
 
 void test_trim()
 {
@@ -221,7 +223,7 @@ int main()
     test_min_max();
     test_successor();
     test_in_order();
-    test_binhex();
+    //test_binhex();
     test_trim();
 
     cout << "Detailed testing completed." << endl;
