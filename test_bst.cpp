@@ -13,7 +13,6 @@
 #include <chrono>
 #include <fstream>
 
-
 using namespace std;
 
 void test_empty()
@@ -35,9 +34,9 @@ void test_empty()
     {
         cerr << "Error in determining if BST is empty : " << e.what() << endl;
     }
- 
+
     // testing our stuff
-       try
+    try
     {
         BST<string, float> bst;
         if (!bst.empty())
@@ -54,8 +53,8 @@ void test_empty()
     {
         cerr << "Error in determining if BST is empty : " << e.what() << endl;
     }
-    // long long 
-       try
+    // long long
+    try
     {
         BST<string, double> bst;
         if (!bst.empty())
@@ -78,7 +77,6 @@ void test_insert()
 {
 
     auto begin = std::chrono::high_resolution_clock::now();
-
 
     try
     {
@@ -116,9 +114,7 @@ void test_insert()
         cerr << "Error inserting into bst : " << e.what() << endl;
     }
 
-
     // another test
-
 
     try
     {
@@ -156,7 +152,6 @@ void test_insert()
         cerr << "Error inserting into bst : " << e.what() << endl;
     }
 
-
     //
     auto end = std::chrono::high_resolution_clock::now();
     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
@@ -165,7 +160,6 @@ void test_insert()
 
 void test_get()
 {
-
 
     try
     {
@@ -398,7 +392,7 @@ void test_in_order()
     }
     auto end = std::chrono::high_resolution_clock::now();
     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-    cout << "insert function's time: " << elapsed.count() << " nanoseconds. \n";
+    cout << "in_order function's time: " << elapsed.count() << " nanoseconds. \n";
 }
 
 void test_trim()
