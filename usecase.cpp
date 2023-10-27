@@ -2,7 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
-// #include "bst.cpp"
+#include "bst.cpp"
 using namespace std;
 
 template <typename D, typename K>
