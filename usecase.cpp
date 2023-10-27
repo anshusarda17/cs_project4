@@ -23,32 +23,43 @@ BST<D, K> *create_bst(const string &fname)
 
     return bst;
 }
+template <typename D, typename K>
+string convert(BST<D, K> *bst, string bin)
+{
+    // Pad the binary string to make its length a multiple of 4
+    int pad = 4 - (bin.length() % 4);
+    if (pad != 4)
+    {
+        bin = string(pad, '0') + bin;
+    }
 
+    string hex;
+    for (size_t i = 0; i < bin.length(); i += 4)
+    {
+        string segment = bin.substr(i, 4);
+        hex += bst->get(segment);
+    }
+    return hex;
+}
+
+/*
 template <typename D, typename K>
 string convert(BST<D, K> *bst, string bin)
 {
     string hex;
     int i = 0;
-    // for (size_t i = 0; i < bin.length(); i += 4)
-    while (i < bin.length())
+    for (size_t i = 0; i < bin.length(); i += 4)
     {
         string segment = bin.substr(i, 4);
         string hexSegment = bst->get(segment);
 
-        /*
-        // Check if the segment is found in the BST
-        if (hexSegment.empty())
-        {
-            return;
-        }
-        */
-
         hex += hexSegment;
-        i += 4;
     }
 
     return hex;
 }
+
+*/
 
 /*
 
