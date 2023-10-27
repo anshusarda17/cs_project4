@@ -1,21 +1,15 @@
-#include<iostream>
+#include <iostream>
 
 #include "usecase.cpp"
 
-#include<string>
+#include <string>
 
-#include<ostream>
+#include <ostream>
 using namespace std;
 
+int main()
+{
 
-
-
-
-
-
-int main(){
-
-   
     BST<string, string> *bst1 = create_bst<string, string>("binhex.txt");
     string bin1 = "111010100101";
     string expected_hex1 = "EA5";
@@ -23,11 +17,12 @@ int main(){
     string hex1 = convert<string, string>(bst1, bin1);
     delete bst1;
 
-    try{
-    if (hex1 != expected_hex1)
+    try
     {
-        cout << "Incorrect first result converting " << bin1 << " to hex. Expected : " << expected_hex1 << ", but got : " << hex1 << endl;
-    }
+        if (hex1 != expected_hex1)
+        {
+            cout << "Incorrect first result converting " << bin1 << " to hex. Expected : " << expected_hex1 << ", but got : " << hex1 << endl;
+        }
     }
     catch (exception &e)
     {
@@ -52,14 +47,6 @@ int main(){
     {
         cerr << "Error converting binary to hex : " << e.what() << endl;
     }
-
-
-
-
-
-
-
-
 
     return 0;
 }
