@@ -51,6 +51,7 @@ void BST<Data, Key>::insert(const Data &d, const Key &k)
     { //if BST is empty
 
         root = newNode;
+        return;
     }
     Node<Data, Key> *current = root; //start from root
     Node<Data, Key> *parentt = nullptr;
@@ -373,12 +374,13 @@ Node<D, K> *BST<D, K>::trimHelper(Node<D, K> *node, const K &low, const K &high)
 template <typename D, typename K>
 string BST<D, K>::in_order()
 {
-    return inOrderHelper(root);
+    bool first = true;
+    return inOrderHelper(root, first);
 }
 
 // Helper function to generate an in-order string of keys
 template <typename D, typename K>
-string BST<D, K>::inOrderHelper(Node<D, K> *node)
+string BST<D, K>::inOrderHelper(Node<D, K> *node, bool &first)
 {
     if (node == nullptr)
     {
@@ -388,13 +390,22 @@ string BST<D, K>::inOrderHelper(Node<D, K> *node)
     string result;
 
     // Traverse the left subtree (in-order)
-    result += inOrderHelper(node->left);
+    result += inOrderHelper(node->left, first);
 
     // Visit the current node
-    result += std::to_string(node->key) + " ";
+    // to not add a space at the end,
+    if (first){
+        first  =false;
+    }
+    else{
+        result += " ";
+    }
+        
+    
+    result += std::to_string(node->key);
 
     // Traverse the right subtree (in-order)
-    result += inOrderHelper(node->right);
+    result += inOrderHelper(node->right, first);
 
     return result;
 }
@@ -406,7 +417,7 @@ string BST<D, K>::to_string()
 {
     if (root == nullptr)
     {
-        return ""; // Return an empty string if the tree is empty
+        return " "; // Return an empty string if the tree is empty
     }
 
     string result;
@@ -417,7 +428,7 @@ string BST<D, K>::to_string()
     {
         Node<D, K> *current = nodes.front();
         nodes.pop();
-
+        cout << std::to_string(current->key) << endl;
         result += std::to_string(current->key) + " ";
 
         if (current->left)

@@ -50,7 +50,7 @@ public:
 
     void trim(const Key &low, const Key &high);
 
-    std::string inOrderHelper(Node<Data, Key> *node);
+    std::string inOrderHelper(Node<Data, Key> *node, bool &first);
 
     std::string to_string();
 
