@@ -1,6 +1,7 @@
 #include <iostream>
 #include "bst.h"
 #include <string>
+#include <queue>
 using namespace std;
 
 template <typename Data, typename Key>
@@ -390,7 +391,7 @@ string BST<D, K>::inOrderHelper(Node<D, K> *node)
     result += inOrderHelper(node->left);
 
     // Visit the current node
-    result += to_string(node->key) + " ";
+    result += std::to_string(node->key) + " ";
 
     // Traverse the right subtree (in-order)
     result += inOrderHelper(node->right);
@@ -401,7 +402,35 @@ string BST<D, K>::inOrderHelper(Node<D, K> *node)
 // fix this FUNCTION KOTAA
 // Function to convert data for a specific key to a string
 template <typename D, typename K>
-std::string BST<D, K>::to_string()
+string BST<D, K>::to_string()
 {
-    return inOrderHelper(root);
+    if (root == nullptr)
+    {
+        return ""; // Return an empty string if the tree is empty
+    }
+
+    string result;
+    queue<Node<D, K> *> nodes;
+    nodes.push(root);
+
+    while (!nodes.empty())
+    {
+        Node<D, K> *current = nodes.front();
+        nodes.pop();
+
+        result += std::to_string(current->key) + " ";
+
+        if (current->left)
+        {
+            nodes.push(current->left);
+        }
+        if (current->right)
+        {
+            nodes.push(current->right);
+        }
+    }
+
+    // Remove the trailing space and return the result
+    result.pop_back();
+    return result;
 }
